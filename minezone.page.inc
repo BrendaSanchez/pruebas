@@ -10,7 +10,7 @@ function minezone_page(){
 	dsm($node);
 	$salida = "<h1>Titulo: $node->title</h1> " ;
 	$salida .= l("Enlace al nodo", "node/$node->nid") . "<br/>";
-	$salida .= "Tipo nodo: $node->type" . "<br/>";
+	$salida .= "Tipo nodo: ".ucfirst($node->type)."<br/>";
 	$salida .= "Fecha de creación: ".date("l/d/M/Y", $node->created) . "<br/>";
 	$salida .= "Cant. Comentarios: ". $node->comment_count . "<br/>" ;
 	
