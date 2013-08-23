@@ -11,13 +11,13 @@ function minezone_page(){
 	$salida = "<h1>Titulo: $node->title</h1> " ;
 	$salida .= l("Enlace al nodo", "node/$node->nid") . "<br/>";
 	$salida .= "Tipo nodo: ".ucfirst($node->type)."<br/>";
-	$salida .= "Fecha de creación: ".date("l/d/M/Y", $node->created) . "<br/>";
-	$salida .= "Cant. Comentarios: ". $node->comment_count . "<br/>" ;
+	$salida .= "Fecha de creación: ".format_date($node->created,'custom',"l d/M/Y") . "<br/>";
+	$salida .= "Cant. Comentarios: " ;
 	
 	if($node->comment_count == 0)
 		$salida .= "Sin comentarios" . "<br/>";
 	elseif ($node->comment_count == 1)
-		$salida .= "Singular....Un comentario" . "<br/>";
+		$salida .= "Un comentario" . "<br/>";
 	elseif ($node->comment_count > 1)
 		$salida .= "$node->comment_count comentarios" . "<br/>";
 	
