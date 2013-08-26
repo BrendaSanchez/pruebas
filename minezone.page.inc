@@ -4,31 +4,33 @@
  */
 
 function minezone_page(){
-	$nid = 2;
+	$nid = 8;
 	$node = node_load($nid);
-	
-	dsm($node);
-	$salida = "<h1>Titulo: $node->title</h1> " ;
-	$salida .= l("Enlace al nodo", "node/$node->nid") . "<br/>";
-	$salida .= "Tipo nodo: ".ucfirst($node->type)."<br/>";
-	$salida .= "Fecha de creación: ".format_date($node->created,'custom',"l d/M/Y") . "<br/>";
-	$salida .= "Cant. Comentarios: " ;
-	
-	if($node->comment_count == 0)
-		$salida .= "Sin comentarios" . "<br/>";
-	elseif ($node->comment_count == 1)
-		$salida .= "Un comentario" . "<br/>";
-	elseif ($node->comment_count > 1)
-		$salida .= "$node->comment_count comentarios" . "<br/>";
-	
+	$comentarios = comment_node_page_additions($node);
+	$comentarios = $comentarios["comments"];
 
-	$salida .="Estado del nodo: ";
-	if($node->status == 1)
-		$salida .="<div style='color:#0f0;padding:10px;font-size:18px;'>Publicado</div>";
-	elseif($node->status == 0)
-		$salida .="<div style='color:#f00;padding:10px;font-size:18px;'>No Publicado</div>";
-	$salida .= "Autor del Nodo: $node->name" . "<br/>";
-	$salida .= "ir al usuario: ".l("Link" ,"user/$node->uid" );
+	dsm($comentarios);
+	dsm($node);
+
+	$salida = "<h1>Titulo: $node->title</h1> " ;
+	$salida .= "<table class='table table-hover'>
+	    <thead>
+		<th>Autor</th>
+		<th>Fecha</th>
+		<th>Comentario</th>
+	    </thead>
+	    <tbody>";
+
+	for($id=15; $id<=19 ; $id++){
+		$salida .= "<tr>
+		    <td>".$comentarios[$id]["comment_body"]["#object"]->name."</td>
+		    <td>".format_date($comentarios[$id]["comment_body"]["#object"]->created,'custom', 'd/M/Y')."</td>
+		    <td>".$comentarios[$id]["comment_body"]["#items"][0]['value']."</td>
+		</tr>";
+	}	
+	
+	$salida .="</tbody>
+	</table>";
 	
 	return $salida;	
 }
