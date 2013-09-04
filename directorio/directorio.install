@@ -1,0 +1,116 @@
+<?php
+/**
+*Implements hook_install()  Me puede servir para inicializar variables...............
+*system tiene la direccion del modulo, nombre del modulo, si esta instalado o no, 
+*tienen un campo de peso que sirve para el orden en el que se van a ejecutar
+*/
+function directorio_install() {
+}
+
+/**
+*Implements hook_uninstall()  Me puede servir para borrar esas variables, dejar el sitio al estado original o lo mas cercano al estado *original.
+*/	
+function directorio_uninstall() {
+
+}
+ 
+ /*
+ *Implements hook_schema() 
+ *tiene la estructura de datos que voy a generar ....usar por ser mas seguro, fácil
+ *la razon principal es database abstraction layer .......drupal nunca lo comunicaremos con una base de datos 
+ */
+function directorio_schema() {
+	$schema = array();
+
+	$schema["contactos"] = array(
+		'description' => 'La tabla de contactos',
+		'fields' => array(
+			'cid' => array(
+					'description' => 'El ID único del contacto',
+					'type' => 'serial',
+					'unsigned' => TRUE,
+					'not null' => TRUE
+			),
+			'nombre' => array(
+				'description' => 'Nombre o nombres del contacto',
+				'type' => 'varchar',
+				'length' => '255',
+				'not null' => TRUE,
+				'default'  => ''
+			),
+			'apellido_paterno' => array(
+				'description' => 'Apellido paterno del contacto',
+				'type' => 'varchar',
+				'length' => '255',
+				'not null' => TRUE,
+				'default'  => ''
+			),
+			'apellido_materno' => array(
+				'description' => 'Apellido materno del contacto',
+				'type' => 'varchar',
+				'length' => '255',
+				'not null' => FALSE,
+				'default' => ''
+			),
+			'departamento' => array(
+				'description' => 'departamento donde vive el contacto',
+				'type' => 'varchar',
+				'length' => '255',
+				'not null' => TRUE,
+				'default'  => ''
+			),
+			'telefono_oficina' => array(
+				'description' => 'Teléfono de la oficina',
+				'type' => 'varchar',
+				'length' => '24',
+				'not null' => TRUE,
+				'default'  => ''
+			),
+			'oficina_extensión' => array(
+				'description' => 'extensión de la oficina',
+				'type' => 'varchar',
+				'length' => '24',
+				'not null' => FALSE,
+				'default' => NULL
+			),
+			'email_trabajo' => array(
+				'description' => 'email del trabajo del contacto',
+				'type' => 'varchar',
+				'length' => '255',
+				'not null' => FAlSE,
+				'default'  => NULL
+			),
+			'email_personal' => array(
+				'description' => 'email personal del contacto',
+				'type' => 'varchar',
+				'length' => '255',
+				'not null' => FAlSE,
+				'default'  => NULL
+			),
+			'telefono_casa' => array(
+				'description' => 'Teléfono de casa del contacto',
+				'type' => 'varchar',
+				'length' => '24',
+				'not null' => FALSE,
+				'default' => NULL
+			),
+			'telefono_celular' => array(
+				'description' => 'Teléfono celular del contacto',
+				'type' => 'varchar',
+				'length' => '24',
+				'not null' => FALSE,
+				'default' => NULL
+			),
+		),
+		'indexes' => array(
+			'nombre' => array("nombre"),
+			'apellido_paterno' => array("apellido_paterno"),
+			'apellido_materno' => array("apellido_materno"),
+			'oficina_extensión' => array("oficina_extensión"),
+			'email_trabajo' => array("email_trabajo")
+		),
+		'primary key' => array("cid")
+	);
+
+	return $schema;
+}
